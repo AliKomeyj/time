@@ -1,0 +1,123 @@
+#include <iostream>
+using namespace std;
+class Time
+{
+private:
+	int hour, minute;
+
+public:
+	Time(int h = 0, int m = 0) : hour(h), minute(m) {}
+	Time(int h) : hour(h) { minute = 0; }
+
+	void changeTime();
+	int compare(Time &);
+	string dayTime();
+	int getHour() { return hour; }
+	int getMinute() { return minute; }
+};
+
+bool is_validHour(int hour)
+{
+	if (hour < 0 || hour > 23)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool is_validMinute(int minute)
+{
+	if (minute < 0 || minute > 59)
+	{
+		return false;
+	}
+	return true;
+}
+
+void Time::changeTime()
+{
+	do
+	{
+		cout << "Enter new hour : ";
+		cin >> hour;
+		if (!is_validHour(hour))
+		{
+			cout << "invalid. try again!\n";
+		}
+
+	} while (!is_validHour(hour));
+	do
+	{
+		cout << "Enter new minute : ";
+		cin >> minute;
+		if (!is_validMinute(minute))
+		{
+			cout << "invalid. try again!\n";
+		}
+
+	} while (!is_validMinute(minute));
+}
+
+int Time::compare(Time &t)
+{
+	if (t.hour > hour)
+	{
+		return -1;
+	}
+	else if (t.hour == hour)
+	{
+		if (t.minute > minute)
+		{
+			return -1;
+		}
+		else if (t.minute == minute)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+	else
+	{
+		return 1;
+	}
+}
+
+string Time::dayTime()
+{
+	if (hour < 12 && hour >= 0)
+	{
+		return "morning";
+	}
+	else if (hour == 12 && minute == 0)
+	{
+		return "noon";
+	}
+	else if (hour >= 12 && hour < 17)
+	{
+		return "afternoon";
+	}
+	else if (hour >= 17 && hour < 20)
+	{
+		return "sunset";
+	}
+	else
+	{
+		return "night";
+	}
+}
+
+int main(){
+	Time obj(12,1);
+	Time obj2(12,00);
+
+	cout<<obj2.compare(obj)<<endl;
+	
+	obj.changeTime();
+	
+	cout<<obj.dayTime()<<endl;
+
+	system("pause");
+}
